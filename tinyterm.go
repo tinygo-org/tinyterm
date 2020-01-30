@@ -4,17 +4,11 @@ import (
 	"bytes"
 	"fmt"
 	"image"
-	"image/color"
 	"strconv"
 	"strings"
 
 	"github.com/conejoninja/tinyfont"
 	"tinygo.org/x/drivers/ili9341"
-)
-
-var (
-	black = color.RGBA{0, 0, 0, 255}
-	white = color.RGBA{255, 255, 255, 255}
 )
 
 func NewTerminal(display *ili9341.Device) *Terminal {
@@ -286,5 +280,5 @@ func (t *Terminal) lf() {
 	t.next = 0
 	t.scroll = (t.scroll + t.fontHeight) % (t.rows * t.fontHeight)
 	t.display.SetScroll((t.scroll + t.fontHeight) % t.height)
-	t.display.FillRectangle(0, t.scroll, t.width, t.fontHeight, black)
+	t.display.FillRectangle(0, t.scroll, t.width, t.fontHeight, t.attrs.bgcol)
 }
