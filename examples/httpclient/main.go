@@ -14,15 +14,17 @@ import (
 	"machine"
 	"time"
 
+	"tinygo.org/x/tinyfont/proggy"
+
 	"tinygo.org/x/drivers/ili9341"
 	"tinygo.org/x/drivers/net"
 	"tinygo.org/x/drivers/wifinina"
 
-	"github.com/conejoninja/tinyfont/proggy"
 	"github.com/valyala/fastjson"
 
 	"github.com/bgould/http/client"
 	"github.com/bgould/tinyterm"
+	"github.com/bgould/tinyterm/fonts/proggy"
 )
 
 // access point info
@@ -77,7 +79,7 @@ func main() {
 		FontOffset: 6,
 	})
 
-	// Configure SPI for 8Mhz, Mode 0, MSB First
+	// Configure spi for 8Mhz, Mode 0, MSB First
 	machine.NINA_SPI.Configure(machine.SPIConfig{
 		Frequency: 8 * 1e6,
 		MOSI:      machine.NINA_MOSI,

@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/bgould/tinyterm"
-	"github.com/conejoninja/tinyfont/proggy"
+	"github.com/bgould/tinyterm/fonts/proggy"
 	"tinygo.org/x/drivers/ili9341"
 )
 
