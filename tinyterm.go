@@ -4,21 +4,28 @@ import (
 	"bytes"
 	"fmt"
 	"image"
+	"image/color"
 	"strconv"
 	"strings"
 
-	"github.com/conejoninja/tinyfont"
-	"tinygo.org/x/drivers/ili9341"
+	"tinygo.org/x/drivers"
+	"tinygo.org/x/tinyfont"
 )
 
-func NewTerminal(display *ili9341.Device) *Terminal {
+func NewTerminal(display Displayer) *Terminal {
 	return &Terminal{
 		display: display,
 	}
 }
 
+type Displayer interface {
+	drivers.Displayer
+	FillRectangle(x, y, width, height int16, c color.RGBA) error
+	SetScroll(line int16)
+}
+
 type Terminal struct {
-	display *ili9341.Device
+	display Displayer
 	width   int16
 	height  int16
 	scroll  int16
@@ -83,6 +90,10 @@ func (t *Terminal) WriteByte(b byte) error {
 
 func (t *Terminal) Printf(format string, args ...interface{}) (n int, err error) {
 	return fmt.Fprintf(t, format, args...)
+}
+
+func (t *Terminal) Println(args ...interface{}) (n int, err error) {
+	return fmt.Fprintln(t, args...)
 }
 
 type state uint8
