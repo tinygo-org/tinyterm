@@ -6,22 +6,19 @@ import (
 	"machine"
 	"time"
 
-	"tinygo.org/x/drivers/ili9341"
+	"tinygo.org/x/drivers/st7789"
 	"tinygo.org/x/tinyterm"
 	"tinygo.org/x/tinyterm/fonts/proggy"
 )
 
 var (
-	display = ili9341.NewParallel(
-		machine.LCD_DATA0,
-		machine.TFT_WR,
+	display = st7789.New(machine.SPI1,
+		machine.TFT_RESET,
 		machine.TFT_DC,
 		machine.TFT_CS,
-		machine.TFT_RESET,
-		machine.TFT_RD,
-	)
+		machine.TFT_LITE)
 
-	terminal = tinyterm.NewTerminal(display)
+	terminal = tinyterm.NewTerminal(&display)
 
 	black = color.RGBA{0, 0, 0, 255}
 	white = color.RGBA{255, 255, 255, 255}
@@ -33,15 +30,26 @@ var (
 )
 
 func main() {
+	machine.SPI1.Configure(machine.SPIConfig{
+		Frequency: 8000000,
+		SCK:       machine.TFT_SCK,
+		SDO:       machine.TFT_SDO,
+		SDI:       machine.TFT_SDO,
+		Mode:      0,
+	})
+	display.Configure(st7789.Config{
+		Rotation:     st7789.ROTATION_180,
+		Height:       320,
+		RowOffset:    0,
+		ColumnOffset: 0,
+		FrameRate:    st7789.FRAMERATE_111,
+		VSyncLines:   st7789.MAX_VSYNC_SCANLINES,
+	})
 
-	machine.TFT_BACKLIGHT.Configure(machine.PinConfig{machine.PinOutput})
-
-	display.Configure(ili9341.Config{})
 	width, height := display.Size()
 	_, _ = width, height
 
 	display.FillScreen(black)
-	machine.TFT_BACKLIGHT.High()
 
 	terminal.Configure(&tinyterm.Config{
 		Font:       font,
@@ -52,5 +60,4 @@ func main() {
 		time.Sleep(50 * time.Millisecond)
 		fmt.Fprintf(terminal, "\ntime: %d", time.Now().UnixNano())
 	}
-
 }
