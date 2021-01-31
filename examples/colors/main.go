@@ -9,8 +9,8 @@ import (
 
 	"tinygo.org/x/drivers/ili9341"
 
-	"github.com/bgould/tinyterm"
-	"github.com/bgould/tinyterm/fonts/proggy"
+	"tinygo.org/x/tinyterm"
+	"tinygo.org/x/tinyterm/fonts/proggy"
 )
 
 var (

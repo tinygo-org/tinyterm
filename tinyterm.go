@@ -60,7 +60,7 @@ func (t *Terminal) Configure(config *Config) {
 
 	t.attrs.reset()
 
-	_, charWidth := tinyfont.LineWidth(config.Font, []byte{'0'})
+	_, charWidth := tinyfont.LineWidth(config.Font, "0")
 
 	t.font = config.Font
 	t.fontWidth = int16(charWidth)
@@ -278,7 +278,7 @@ func (t *Terminal) drawchar(b byte) {
 	x := t.next * t.fontWidth
 	y := t.scroll + t.fontOffset
 	t.display.FillRectangle(x, t.scroll, t.fontWidth, t.fontHeight, t.attrs.bgcol)
-	tinyfont.DrawChar(t.display, t.font, x, y, b, t.attrs.fgcol)
+	tinyfont.DrawChar(t.display, t.font, x, y, rune(b), t.attrs.fgcol)
 	t.next += 1
 }
 

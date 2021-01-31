@@ -23,8 +23,8 @@ import (
 	"github.com/valyala/fastjson"
 
 	"github.com/bgould/http/client"
-	"github.com/bgould/tinyterm"
-	"github.com/bgould/tinyterm/fonts/proggy"
+	"tinygo.org/x/tinyterm"
+	"tinygo.org/x/tinyterm/fonts/proggy"
 )
 
 // access point info
