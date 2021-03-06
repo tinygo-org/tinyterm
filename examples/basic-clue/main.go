@@ -21,12 +21,7 @@ var (
 	terminal = tinyterm.NewTerminal(&display)
 
 	black = color.RGBA{0, 0, 0, 255}
-	white = color.RGBA{255, 255, 255, 255}
-	red   = color.RGBA{255, 0, 0, 255}
-	blue  = color.RGBA{0, 0, 255, 255}
-	green = color.RGBA{0, 255, 0, 255}
-
-	font = &proggy.TinySZ8pt7b
+	font  = &proggy.TinySZ8pt7b
 )
 
 func main() {
@@ -38,12 +33,10 @@ func main() {
 		Mode:      0,
 	})
 	display.Configure(st7789.Config{
-		Rotation:     st7789.ROTATION_180,
-		Height:       320,
-		RowOffset:    0,
-		ColumnOffset: 0,
-		FrameRate:    st7789.FRAMERATE_111,
-		VSyncLines:   st7789.MAX_VSYNC_SCANLINES,
+		Rotation:   st7789.ROTATION_180,
+		Height:     320,
+		FrameRate:  st7789.FRAMERATE_111,
+		VSyncLines: st7789.MAX_VSYNC_SCANLINES,
 	})
 
 	width, height := display.Size()
