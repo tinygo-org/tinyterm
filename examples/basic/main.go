@@ -6,21 +6,11 @@ import (
 	"machine"
 	"time"
 
-	"tinygo.org/x/drivers/ili9341"
 	"tinygo.org/x/tinyterm"
 	"tinygo.org/x/tinyterm/fonts/proggy"
 )
 
 var (
-	display = ili9341.NewParallel(
-		machine.LCD_DATA0,
-		machine.TFT_WR,
-		machine.TFT_DC,
-		machine.TFT_CS,
-		machine.TFT_RESET,
-		machine.TFT_RD,
-	)
-
 	terminal = tinyterm.NewTerminal(display)
 
 	black = color.RGBA{0, 0, 0, 255}
@@ -34,14 +24,13 @@ var (
 
 func main() {
 
-	machine.TFT_BACKLIGHT.Configure(machine.PinConfig{machine.PinOutput})
+	backlight.Configure(machine.PinConfig{machine.PinOutput})
 
-	display.Configure(ili9341.Config{})
 	width, height := display.Size()
 	_, _ = width, height
 
 	display.FillScreen(black)
-	machine.TFT_BACKLIGHT.High()
+	backlight.High()
 
 	terminal.Configure(&tinyterm.Config{
 		Font:       font,
