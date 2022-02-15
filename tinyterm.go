@@ -292,4 +292,5 @@ func (t *Terminal) lf() {
 	t.scroll = (t.scroll + t.fontHeight) % (t.rows * t.fontHeight)
 	t.display.SetScroll((t.scroll + t.fontHeight) % t.height)
 	t.display.FillRectangle(0, t.scroll, t.width, t.fontHeight, t.attrs.bgcol)
+	t.display.Display()
 }
