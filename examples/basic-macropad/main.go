@@ -53,10 +53,6 @@ func (d *displayer) FillRectangle(x, y, w, h int16, c color.RGBA) error {
 	return nil
 }
 
-func (d *displayer) SetScroll(line int16) {
-	d.Device.Command(0x40 + uint8(line&0b111111))
-}
-
 // type serialWrapper struct {
 // 	*tinyterm.Terminal
 // }
