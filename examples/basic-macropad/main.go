@@ -4,9 +4,9 @@
 package main
 
 import (
-	"fmt"
 	"image/color"
 	"machine"
+	"strconv"
 
 	"tinygo.org/x/drivers/sh1106"
 	"tinygo.org/x/tinydraw"
@@ -39,8 +39,10 @@ func init() {
 
 func main() {
 	for i := 0; ; i++ {
-		//time.Sleep(10 * time.Millisecond)
-		fmt.Fprintf(terminal, "counter: %d\n", i)
+		// time.Sleep(1 * time.Millisecond)
+		terminal.Write([]byte("counter: "))
+		terminal.Write([]byte(strconv.FormatUint(uint64(i), 10)))
+		terminal.Write([]byte("\n"))
 	}
 }
 
