@@ -1,12 +1,8 @@
 package tinyterm
 
 import (
-	"bytes"
-	"fmt"
-	"image"
+	"errors"
 	"image/color"
-	"strconv"
-	"strings"
 
 	"tinygo.org/x/drivers"
 	"tinygo.org/x/tinyfont"
@@ -37,7 +33,7 @@ type Terminal struct {
 
 	state   state
 	command byte
-	params  *bytes.Buffer
+	params  buffer
 	attrs   sgrAttrs
 
 	font       *tinyfont.Font
@@ -46,17 +42,22 @@ type Terminal struct {
 	fontOffset int16
 }
 
+var (
+	errBufFull  = errors.New("buffer is full")
+	errBufEmpty = errors.New("buffer is empty")
+)
+
 type Config struct {
-	ScreenBounds image.Rectangle
-	Font         *tinyfont.Font
-	FontHeight   int16
-	FontOffset   int16
+	// ScreenBounds image.Rectangle
+	Font       *tinyfont.Font
+	FontHeight int16
+	FontOffset int16
 }
 
 func (t *Terminal) Configure(config *Config) {
 
 	t.state = stateInput
-	t.params = bytes.NewBuffer(make([]byte, 32))
+	// t.params = bytes.NewBuffer(make([]byte, 32))
 
 	t.attrs.reset()
 
@@ -86,14 +87,6 @@ func (t *Terminal) Write(buf []byte) (int, error) {
 func (t *Terminal) WriteByte(b byte) error {
 	t.putchar(b)
 	return nil
-}
-
-func (t *Terminal) Printf(format string, args ...interface{}) (n int, err error) {
-	return fmt.Fprintf(t, format, args...)
-}
-
-func (t *Terminal) Println(args ...interface{}) (n int, err error) {
-	return fmt.Fprintln(t, args...)
 }
 
 type state uint8
@@ -210,11 +203,8 @@ func (t *Terminal) putchar(b byte) {
 }
 
 func (t *Terminal) selectGraphicRendition() {
-	params := strings.Split(t.params.String(), ";")
-	attr, err := strconv.Atoi(params[0])
-	if err != nil {
-		println("error converting SGR param ID: " + err.Error())
-	}
+	v, count := t.params.parseSGR()
+	attr := v[0]
 	switch attr {
 	case SGRReset:
 		t.attrs.reset()
@@ -237,11 +227,10 @@ func (t *Terminal) selectGraphicRendition() {
 	case SGRFgWhite:
 		t.attrs.setFG(Color(attr % 10))
 	case SGRSetFgColor:
-		c, err := strconv.Atoi(params[2])
-		if err != nil {
-			println("error converting color: " + err.Error())
+		if v[1] != 5 || count != 3 {
+			t.attrs.reset()
 		}
-		t.attrs.setFG(Color(c))
+		t.attrs.setFG(Color(v[2]))
 	case SGRDefaultFgColor:
 		t.attrs.setFG(ColorWhite)
 	case SGRBgBlack:
@@ -261,11 +250,10 @@ func (t *Terminal) selectGraphicRendition() {
 	case SGRBgWhite:
 		t.attrs.setBG(Color(attr % 10))
 	case SGRSetBgColor:
-		c, err := strconv.Atoi(params[2])
-		if err != nil {
-			println("error converting color: " + err.Error())
+		if v[1] != 5 || count != 3 {
+			t.attrs.reset()
 		}
-		t.attrs.setBG(Color(c))
+		t.attrs.setBG(Color(v[2]))
 	case SGRDefaultBgColor:
 		t.attrs.setBG(ColorBlack)
 	}
