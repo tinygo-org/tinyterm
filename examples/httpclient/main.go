@@ -3,7 +3,6 @@
 // Arduino example:
 //
 // https://github.com/arduino-libraries/WiFiNINA/blob/master/examples/WiFiWebClientRepeating/
-//
 package main
 
 import (
@@ -24,14 +23,13 @@ import (
 
 	"github.com/bgould/http/client"
 	"tinygo.org/x/tinyterm"
-	"tinygo.org/x/tinyterm/fonts/proggy"
 )
 
 // access point info
-const ssid = ""
-const pass = ""
+var ssid string
+var pass string
 
-// IP address of the server aka "hub". Replace with your own info.
+// IP address of the server aka "tinygo flash -target pyportal -ldflags="-X main.ssid=MYSSID -X main.pass=MYPASS" ./examples/httpclienthub". Replace with your own info.
 const server = "numbersapi.com"
 
 var (
@@ -82,8 +80,8 @@ func main() {
 	// Configure spi for 8Mhz, Mode 0, MSB First
 	machine.NINA_SPI.Configure(machine.SPIConfig{
 		Frequency: 8 * 1e6,
-		MOSI:      machine.NINA_MOSI,
-		MISO:      machine.NINA_MISO,
+		SDO:       machine.NINA_SDO,
+		SDI:       machine.NINA_SDI,
 		SCK:       machine.NINA_SCK,
 	})
 
