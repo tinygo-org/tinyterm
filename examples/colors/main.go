@@ -9,8 +9,8 @@ import (
 
 	"tinygo.org/x/drivers/ili9341"
 
+	"tinygo.org/x/tinyfont/proggy"
 	"tinygo.org/x/tinyterm"
-	"tinygo.org/x/tinyterm/fonts/proggy"
 )
 
 var (
@@ -25,7 +25,7 @@ var (
 
 	terminal = tinyterm.NewTerminal(display)
 
-	font = &proggy.TinySZ8pt8b
+	font = &proggy.TinySZ8pt7b
 )
 
 func main() {

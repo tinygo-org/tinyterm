@@ -7,8 +7,9 @@ import (
 	"time"
 
 	"tinygo.org/x/drivers/ili9341"
+
+	"tinygo.org/x/tinyfont/proggy"
 	"tinygo.org/x/tinyterm"
-	"tinygo.org/x/tinyterm/fonts/proggy"
 )
 
 var (
