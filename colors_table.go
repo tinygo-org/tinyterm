@@ -1,3 +1,4 @@
+//go:build !calc
 // +build !calc
 
 package tinyterm
