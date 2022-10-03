@@ -3,7 +3,6 @@ package tinyterm
 import (
 	"bytes"
 	"fmt"
-	"image"
 	"image/color"
 	"strconv"
 	"strings"
@@ -30,7 +29,6 @@ type Terminal struct {
 	height  int16
 	scroll  int16
 
-	//buffer []byte // buffer for the next that has been written to the terminal
 	rows int16 // number of rows in the text buffer
 	cols int16 // number of columns in the text buffer
 	next int16 // index in the buffer at which next char will be put
@@ -44,17 +42,18 @@ type Terminal struct {
 	fontWidth  int16
 	fontHeight int16
 	fontOffset int16
+
+	useSoftwareScroll bool
 }
 
 type Config struct {
-	ScreenBounds image.Rectangle
-	Font         *tinyfont.Font
-	FontHeight   int16
-	FontOffset   int16
+	Font              *tinyfont.Font
+	FontHeight        int16
+	FontOffset        int16
+	UseSoftwareScroll bool
 }
 
 func (t *Terminal) Configure(config *Config) {
-
 	t.state = stateInput
 	t.params = bytes.NewBuffer(make([]byte, 32))
 
@@ -71,7 +70,7 @@ func (t *Terminal) Configure(config *Config) {
 	t.rows = t.height / t.fontHeight
 	t.cols = t.width / t.fontWidth
 
-	//t.buffer = make([]byte, t.rows*t.cols)
+	t.useSoftwareScroll = config.UseSoftwareScroll
 	t.scroll = t.fontHeight
 	t.lf()
 }
@@ -290,6 +289,13 @@ func (t *Terminal) cr() {
 func (t *Terminal) lf() {
 	t.next = 0
 	t.scroll = (t.scroll + t.fontHeight) % (t.rows * t.fontHeight)
-	t.display.SetScroll((t.scroll + t.fontHeight) % t.height)
+	if t.useSoftwareScroll {
+		// blank screen if we have reached bottom
+		if t.scroll == 0 {
+			t.display.FillRectangle(0, 0, t.width, t.height, t.attrs.bgcol)
+		}
+	} else {
+		t.display.SetScroll((t.scroll + t.fontHeight) % t.height)
+	}
 	t.display.FillRectangle(0, t.scroll, t.width, t.fontHeight, t.attrs.bgcol)
 }
