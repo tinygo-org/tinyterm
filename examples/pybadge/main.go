@@ -45,9 +45,9 @@ func main() {
 	display.FillScreen(black)
 
 	terminal.Configure(&tinyterm.Config{
-		Font:       font,
-		FontHeight: 10,
-		FontOffset: 6,
+		Font:              font,
+		FontHeight:        10,
+		FontOffset:        6,
 		UseSoftwareScroll: true,
 	})
 	for {
