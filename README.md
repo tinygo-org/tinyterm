@@ -1,5 +1,6 @@
-tinyterm - TinyGo Terminal Emulator
-=============
+# tinyterm - TinyGo Terminal Emulator
+
+[![Build](https://github.com/tinygo-org/tinyterm/actions/workflows/build.yml/badge.svg?branch=dev)](https://github.com/tinygo-org/tinyterm/actions/workflows/build.yml)
 
 A minimal terminal for TinyGo devices supporting 256-color ANSI escape codes.
 
