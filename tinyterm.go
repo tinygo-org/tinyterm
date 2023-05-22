@@ -1,3 +1,7 @@
+// package tinyterm is for TinyGo developers who want to use
+// a terminal style user interface for any display that supports the
+// Displayer interface. This includes several different displays in the
+// TinyGo Drivers repo.
 package tinyterm
 
 import (
@@ -11,18 +15,23 @@ import (
 	"tinygo.org/x/tinyfont"
 )
 
+// NewTerminal returns a new Terminal. The Terminal will need to
+// have Configure called on it to be used.
 func NewTerminal(display Displayer) *Terminal {
 	return &Terminal{
 		display: display,
 	}
 }
 
+// Displayer is a wrapper around the TinyGo drivers repo's Displayer interface.
 type Displayer interface {
 	drivers.Displayer
 	FillRectangle(x, y, width, height int16, c color.RGBA) error
 	SetScroll(line int16)
 }
 
+// Terminal is a terminal interface that can be used on any display
+// that supports the Displayer interface.
 type Terminal struct {
 	display Displayer
 	width   int16
@@ -46,13 +55,24 @@ type Terminal struct {
 	useSoftwareScroll bool
 }
 
+// Config contains the configuration for a Terminal.
 type Config struct {
-	Font              *tinyfont.Font
-	FontHeight        int16
-	FontOffset        int16
+	// the font to be used for the terminal
+	Font *tinyfont.Font
+
+	// font height for the terminal
+	FontHeight int16
+
+	// font offset for the terminal
+	FontOffset int16
+
+	// UseSoftwareScroll when true will blank the display an start again at
+	// the top when running out of space, instead of using whatever hardware
+	// scrolling is available on the display.
 	UseSoftwareScroll bool
 }
 
+// Configure needs to be called for a new Terminal before it can be used.
 func (t *Terminal) Configure(config *Config) {
 	t.state = stateInput
 	t.params = bytes.NewBuffer(make([]byte, 32))
@@ -75,6 +95,7 @@ func (t *Terminal) Configure(config *Config) {
 	t.lf()
 }
 
+// Write some data to the terminal.
 func (t *Terminal) Write(buf []byte) (int, error) {
 	for _, b := range buf {
 		t.putchar(b)
@@ -82,15 +103,20 @@ func (t *Terminal) Write(buf []byte) (int, error) {
 	return len(buf), nil
 }
 
+// Write a single byte to the terminal.
 func (t *Terminal) WriteByte(b byte) error {
 	t.putchar(b)
 	return nil
 }
 
+// Printf wraps the fmt package function of the same name, and outputs the
+// result to the terminal.
 func (t *Terminal) Printf(format string, args ...interface{}) (n int, err error) {
 	return fmt.Fprintf(t, format, args...)
 }
 
+// Println wraps the fmt package function of the same name, and outputs the
+// result to the terminal.
 func (t *Terminal) Println(args ...interface{}) (n int, err error) {
 	return fmt.Fprintln(t, args...)
 }
@@ -282,8 +308,6 @@ func (t *Terminal) drawchar(b byte) {
 }
 
 func (t *Terminal) cr() {
-	//t.next = 0
-	//t.display.FillRectangle(0, t.scroll, t.width, t.fontHeight, black)
 }
 
 func (t *Terminal) lf() {
