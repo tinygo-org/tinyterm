@@ -20,7 +20,7 @@ func InitDisplay() tinyterm.Displayer {
 
 	display := st7735.New(machine.SPI1, machine.TFT_RST, machine.TFT_DC, machine.TFT_CS, machine.TFT_LITE)
 	display.Configure(st7735.Config{
-		Rotation: st7735.ROTATION_90,
+		Rotation: st7735.ROTATION_180,
 	})
 	display.FillScreen(color.RGBA{0, 0, 0, 255})
 
