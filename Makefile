@@ -4,9 +4,11 @@ MD5SUM = md5sum
 # tinygo binary for tests
 TINYGO ?= tinygo
 
-.PHONY: all clean fmt fmt-check
+.PHONY: all clean fmt fmt-check test smoke-test
 
-all: clean fmt-check smoketest
+all: clean fmt-check test
+
+test: smoke-test
 
 clean:
 	@mkdir -p build
