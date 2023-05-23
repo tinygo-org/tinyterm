@@ -2,50 +2,29 @@ package main
 
 import (
 	"fmt"
-	"image/color"
-	"machine"
 	"strings"
 	"time"
 
-	"tinygo.org/x/drivers/ili9341"
-
 	"tinygo.org/x/tinyfont/proggy"
 	"tinygo.org/x/tinyterm"
+	"tinygo.org/x/tinyterm/examples/initdisplay"
 )
 
 var (
-	display = ili9341.NewParallel(
-		machine.LCD_DATA0,
-		machine.TFT_WR,
-		machine.TFT_DC,
-		machine.TFT_CS,
-		machine.TFT_RESET,
-		machine.TFT_RD,
-	)
-
-	terminal = tinyterm.NewTerminal(display)
-
 	font = &proggy.TinySZ8pt7b
 )
 
 func main() {
-
-	time.Sleep(time.Second)
-
-	machine.TFT_BACKLIGHT.Configure(machine.PinConfig{machine.PinOutput})
-
-	display.Configure(ili9341.Config{})
-	width, height := display.Size()
-	_, _ = width, height
-
-	display.FillScreen(color.RGBA{0, 0, 0, 255})
-	machine.TFT_BACKLIGHT.High()
+	display := initdisplay.InitDisplay()
+	terminal := tinyterm.NewTerminal(display)
 
 	terminal.Configure(&tinyterm.Config{
 		Font:       font,
 		FontHeight: 10,
 		FontOffset: 6,
 	})
+
+	time.Sleep(time.Second)
 
 	for n := 0; ; n++ {
 		terminal.Write([]byte("   " + strings.Repeat("_", 36) + "\n"))

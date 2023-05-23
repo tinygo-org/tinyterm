@@ -20,9 +20,11 @@ fmt-check:
 
 TARGET = build/examples_basic.hex \
 		 build/examples_basic_clue.hex \
+		 build/examples_basic_gopher_badge.hex \
+		 build/examples_basic_pybadge.hex \
+		 build/examples_basic_wioterminal.hex \
 		 build/examples_colors.hex \
-		 build/examples_httpclient.hex \
-		 build/examples_pybadge.hex
+		 build/examples_httpclient.hex
 .PHONY: smoketest $(TARGET)
 smoke-test: clean $(TARGET)
 
@@ -31,7 +33,19 @@ build/examples_basic.hex:
 	@$(MD5SUM) $@
 
 build/examples_basic_clue.hex:
-	$(TINYGO) build -size short -o $@ -target=clue ./examples/basic-clue
+	$(TINYGO) build -size short -o $@ -target=clue ./examples/basic
+	@$(MD5SUM) $@
+
+build/examples_basic_gopher_badge.hex:
+	$(TINYGO) build -size short -o $@ -target=gopher-badge ./examples/basic
+	@$(MD5SUM) $@
+
+build/examples_basic_pybadge.hex:
+	$(TINYGO) build -size short -o $@ -target=pybadge ./examples/basic
+	@$(MD5SUM) $@
+
+build/examples_basic_wioterminal.hex:
+	$(TINYGO) build -size short -o $@ -target=wioterminal ./examples/basic
 	@$(MD5SUM) $@
 
 build/examples_colors.hex:
