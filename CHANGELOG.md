@@ -1,0 +1,23 @@
+0.3.0
+---
+
+- **all**
+    - add .gitignore
+- **build**
+    - add Makefile and GH Actions workflow
+    - add 'make test' alias to Makefile
+    - switch to ghcr.io for docker container
+- **docs**
+    - add GH action badge to README
+    - add godoc explanations and general header about what this package does
+    - explain what the different examples are and how to run them
+- **examples**
+    - correct go fmt of pybadge example
+    - unify with initdisplay and add gopher-badge
+    - examples/initdisplay/pybadge: fix rotation
+- **license**
+    - add same license file as the rest of TinyGo
+- **modules**
+    - update to latest drivers
+- **core**
+    - handle displays without hardware scrolling (#4)
