@@ -11,6 +11,7 @@ import (
 	"image/color"
 	"io"
 	"machine"
+	"strconv"
 	"time"
 
 	"tinygo.org/x/tinyfont/proggy"
@@ -176,7 +177,7 @@ func connectToAP() {
 	message("Connecting to " + ssid)
 	adaptor.SetPassphrase(ssid, pass)
 	for st, _ := adaptor.GetConnectionStatus(); st != wifinina.StatusConnected; {
-		message("Connection status: " + st.String())
+		message("Connection status: " + strconv.Itoa(int(st)))
 		time.Sleep(1 * time.Second)
 		st, _ = adaptor.GetConnectionStatus()
 	}
