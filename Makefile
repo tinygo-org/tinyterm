@@ -55,7 +55,7 @@ build/examples_colors.hex:
 	@$(MD5SUM) $@
 
 build/examples_httpclient.hex:
-	$(TINYGO) build -size short -o $@ -target=pyportal ./examples/httpclient
+	$(TINYGO) build -size short -o $@ -target=pyportal -stack-size=4kb ./examples/httpclient
 	@$(MD5SUM) $@
 
 build/examples_pybadge.hex:
