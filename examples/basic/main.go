@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"image/color"
 	"time"
 
 	"tinygo.org/x/tinyfont/proggy"
@@ -11,12 +10,6 @@ import (
 )
 
 var (
-	black = color.RGBA{0, 0, 0, 255}
-	white = color.RGBA{255, 255, 255, 255}
-	red   = color.RGBA{255, 0, 0, 255}
-	blue  = color.RGBA{0, 0, 255, 255}
-	green = color.RGBA{0, 255, 0, 255}
-
 	font = &proggy.TinySZ8pt7b
 )
 
@@ -25,13 +18,15 @@ func main() {
 	terminal := tinyterm.NewTerminal(display)
 
 	terminal.Configure(&tinyterm.Config{
-		Font:       font,
-		FontHeight: 10,
-		FontOffset: 6,
+		Font:              font,
+		FontHeight:        10,
+		FontOffset:        6,
+		UseSoftwareScroll: initdisplay.NeedsSoftwareScroll(),
 	})
 	for {
-		time.Sleep(50 * time.Millisecond)
-		fmt.Fprintf(terminal, "\ntime: %d", time.Now().UnixNano())
-	}
+		time.Sleep(time.Second)
 
+		fmt.Fprintf(terminal, "\ntime: %d", time.Now().UnixNano())
+		display.Display()
+	}
 }
