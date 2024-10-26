@@ -1,6 +1,6 @@
 //go:build clue_alpha
 
-package initdisplay
+package displays
 
 import (
 	"image/color"
@@ -10,7 +10,7 @@ import (
 	"tinygo.org/x/tinyterm"
 )
 
-func InitDisplay() tinyterm.Displayer {
+func Init() tinyterm.Displayer {
 	machine.SPI1.Configure(machine.SPIConfig{
 		Frequency: 8000000,
 		SCK:       machine.TFT_SCK,
