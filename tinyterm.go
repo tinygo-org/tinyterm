@@ -121,6 +121,12 @@ func (t *Terminal) Println(args ...interface{}) (n int, err error) {
 	return fmt.Fprintln(t, args...)
 }
 
+// Display the terminal on the display. Must be called after writing to the
+// terminal to see the changes.
+func (t *Terminal) Display() {
+	t.display.Display()
+}
+
 type state uint8
 
 const (
