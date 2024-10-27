@@ -49,6 +49,8 @@ func main() {
 		}
 		terminal.Write([]byte(strings.Repeat(" ", 12) + "|\n"))
 		terminal.Write([]byte("   " + strings.Repeat("\xaf", 36) + "\n"))
+
+		terminal.Display()
 		time.Sleep(5 * time.Second)
 	}
 

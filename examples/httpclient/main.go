@@ -90,6 +90,8 @@ func main() {
 
 		cnt++
 		fmt.Fprintf(terminal, "-------- %d --------\r\n", cnt)
+
+		terminal.Display()
 		time.Sleep(10 * time.Second)
 	}
 }

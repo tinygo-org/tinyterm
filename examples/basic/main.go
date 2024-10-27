@@ -27,6 +27,6 @@ func main() {
 		time.Sleep(time.Second)
 
 		fmt.Fprintf(terminal, "\ntime: %d", time.Now().UnixNano())
-		display.Display()
+		terminal.Display()
 	}
 }
