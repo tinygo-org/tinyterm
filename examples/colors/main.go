@@ -7,7 +7,7 @@ import (
 
 	"tinygo.org/x/tinyfont/proggy"
 	"tinygo.org/x/tinyterm"
-	"tinygo.org/x/tinyterm/examples/initdisplay"
+	"tinygo.org/x/tinyterm/displays"
 )
 
 var (
@@ -15,7 +15,7 @@ var (
 )
 
 func main() {
-	display := initdisplay.InitDisplay()
+	display := displays.Init()
 	terminal := tinyterm.NewTerminal(display)
 
 	terminal.Configure(&tinyterm.Config{
@@ -49,6 +49,8 @@ func main() {
 		}
 		terminal.Write([]byte(strings.Repeat(" ", 12) + "|\n"))
 		terminal.Write([]byte("   " + strings.Repeat("\xaf", 36) + "\n"))
+
+		terminal.Display()
 		time.Sleep(5 * time.Second)
 	}
 

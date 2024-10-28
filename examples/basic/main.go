@@ -6,7 +6,7 @@ import (
 
 	"tinygo.org/x/tinyfont/proggy"
 	"tinygo.org/x/tinyterm"
-	"tinygo.org/x/tinyterm/examples/initdisplay"
+	"tinygo.org/x/tinyterm/displays"
 )
 
 var (
@@ -14,19 +14,19 @@ var (
 )
 
 func main() {
-	display := initdisplay.InitDisplay()
+	display := displays.Init()
 	terminal := tinyterm.NewTerminal(display)
 
 	terminal.Configure(&tinyterm.Config{
 		Font:              font,
 		FontHeight:        10,
 		FontOffset:        6,
-		UseSoftwareScroll: initdisplay.NeedsSoftwareScroll(),
+		UseSoftwareScroll: displays.NeedsSoftwareScroll(),
 	})
 	for {
 		time.Sleep(time.Second)
 
 		fmt.Fprintf(terminal, "\ntime: %d", time.Now().UnixNano())
-		display.Display()
+		terminal.Display()
 	}
 }

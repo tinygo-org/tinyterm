@@ -1,6 +1,6 @@
 //go:build badger2040 || badger2040_w
 
-package initdisplay
+package displays
 
 import (
 	"machine"
@@ -9,7 +9,7 @@ import (
 	"tinygo.org/x/tinyterm"
 )
 
-func InitDisplay() tinyterm.Displayer {
+func Init() tinyterm.Displayer {
 	led3v3 := machine.ENABLE_3V3
 	led3v3.Configure(machine.PinConfig{Mode: machine.PinOutput})
 	led3v3.High()

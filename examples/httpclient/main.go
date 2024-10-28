@@ -20,7 +20,7 @@ import (
 	"tinygo.org/x/drivers/netlink/probe"
 	"tinygo.org/x/tinyfont/proggy"
 	"tinygo.org/x/tinyterm"
-	"tinygo.org/x/tinyterm/examples/initdisplay"
+	"tinygo.org/x/tinyterm/displays"
 )
 
 var (
@@ -39,7 +39,7 @@ var (
 )
 
 func main() {
-	display := initdisplay.InitDisplay()
+	display := displays.Init()
 	terminal := tinyterm.NewTerminal(display)
 
 	terminal.Configure(&tinyterm.Config{
@@ -90,6 +90,8 @@ func main() {
 
 		cnt++
 		fmt.Fprintf(terminal, "-------- %d --------\r\n", cnt)
+
+		terminal.Display()
 		time.Sleep(10 * time.Second)
 	}
 }

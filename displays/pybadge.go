@@ -1,6 +1,6 @@
 //go:build pybadge
 
-package initdisplay
+package displays
 
 import (
 	"image/color"
@@ -10,7 +10,7 @@ import (
 	"tinygo.org/x/tinyterm"
 )
 
-func InitDisplay() tinyterm.Displayer {
+func Init() tinyterm.Displayer {
 	machine.SPI1.Configure(machine.SPIConfig{
 		SCK:       machine.SPI1_SCK_PIN,
 		SDO:       machine.SPI1_SDO_PIN,
@@ -20,7 +20,7 @@ func InitDisplay() tinyterm.Displayer {
 
 	display := st7735.New(machine.SPI1, machine.TFT_RST, machine.TFT_DC, machine.TFT_CS, machine.TFT_LITE)
 	display.Configure(st7735.Config{
-		Rotation: st7735.ROTATION_180,
+		Rotation: st7735.ROTATION_90,
 	})
 	display.FillScreen(color.RGBA{0, 0, 0, 255})
 
