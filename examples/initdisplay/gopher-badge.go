@@ -30,3 +30,7 @@ func InitDisplay() tinyterm.Displayer {
 
 	return &display
 }
+
+func NeedsSoftwareScroll() bool {
+	return false
+}

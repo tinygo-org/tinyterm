@@ -25,6 +25,7 @@ TARGET = build/examples_basic.hex \
 		 build/examples_basic_gopher_badge.hex \
 		 build/examples_basic_pybadge.hex \
 		 build/examples_basic_wioterminal.hex \
+		 build/examples_basic_badger2040.hex \
 		 build/examples_colors.hex \
 		 build/examples_httpclient.hex
 .PHONY: smoketest $(TARGET)
@@ -48,6 +49,10 @@ build/examples_basic_pybadge.hex:
 
 build/examples_basic_wioterminal.hex:
 	$(TINYGO) build -size short -o $@ -target=wioterminal ./examples/basic
+	@$(MD5SUM) $@
+
+build/examples_basic_badger2040.hex:
+	$(TINYGO) build -size short -o $@ -target=badger2040 ./examples/basic
 	@$(MD5SUM) $@
 
 build/examples_colors.hex:
