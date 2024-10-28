@@ -3,7 +3,7 @@ module tinygo.org/x/tinyterm
 go 1.18
 
 require (
-	tinygo.org/x/drivers v0.28.1-0.20241027232331-f12454d4f7be
+	tinygo.org/x/drivers v0.28.1-0.20241028055853-0186d0905dcc
 	tinygo.org/x/tinyfont v0.4.0
 )
 
