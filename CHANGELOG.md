@@ -1,6 +1,20 @@
+0.4.0
+---
+- **core**
+    - add displays subpackage (#13)
+    - add support for Badger2040 (#12)
+- **license**
+    - Update license to 2024
+- **modules**
+    - update to latest drivers and tinyfont
+- **docs**
+    - some small improvments to README
+- **examples**
+    - httpclient: update to use new netdev interface
+
+
 0.3.0
 ---
-
 - **all**
     - add .gitignore
 - **build**
