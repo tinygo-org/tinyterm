@@ -28,6 +28,7 @@ type Displayer interface {
 	drivers.Displayer
 	FillRectangle(x, y, width, height int16, c color.RGBA) error
 	SetScroll(line int16)
+	SetRotation(rotation drivers.Rotation) error
 }
 
 // Terminal is a terminal interface that can be used on any display
