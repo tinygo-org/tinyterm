@@ -1,9 +1,11 @@
 module tinygo.org/x/tinyterm
 
-go 1.18
+go 1.22.1
+
+toolchain go1.23.5
 
 require (
-	tinygo.org/x/drivers v0.29.0
+	tinygo.org/x/drivers v0.30.1-0.20250311194328-156d6e7c9ce4
 	tinygo.org/x/tinyfont v0.5.0
 )
 
