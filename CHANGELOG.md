@@ -1,3 +1,11 @@
+0.5.0
+---
+- **core**
+    - add SetRotation() to tinyterm Displayer interface, to make it a little easier to adjust in actual use
+- **modules**
+    - update to latest drivers and tinyfont
+
+
 0.4.0
 ---
 - **core**
