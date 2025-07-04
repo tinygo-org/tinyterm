@@ -208,6 +208,7 @@ func (t *Terminal) putchar(b byte) {
 				// CUF: Cursor Forward
 			case 'D':
 				// CUB: Cursor Back
+				t.cursorBack()
 			case 'E':
 				// CNL: Cursor Next Line
 			case 'F':
@@ -312,6 +313,12 @@ func (t *Terminal) drawchar(b byte) {
 	t.display.FillRectangle(x, t.scroll, t.fontWidth, t.fontHeight, t.attrs.bgcol)
 	tinyfont.DrawChar(t.display, t.font, x, y, rune(b), t.attrs.fgcol)
 	t.next += 1
+}
+
+func (t *Terminal) cursorBack() {
+	if t.next > 0 {
+		t.next -= 1
+	}
 }
 
 func (t *Terminal) cr() {
